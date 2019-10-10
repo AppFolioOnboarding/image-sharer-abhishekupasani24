@@ -4,6 +4,6 @@
   <br>
   <strong>Image:</strong>
   <br>
-  <%= image_tag @image.url %>
+  <%= image_tag(@image.url, class: 'image-view') %>
 </p>
 <%= link_to 'Back', images_path %>
