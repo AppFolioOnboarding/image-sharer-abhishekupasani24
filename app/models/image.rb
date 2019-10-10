@@ -1,5 +1,5 @@
 class Image < ApplicationRecord
-  validates :url, presence: true, format: { with: %r{(^https://)[a-zA-Z0-9/\_\-\.]+(\.jpg|\.png)$},
+  validates :url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp,
                                             message: 'Invalid url',
                                             multiline: true }
 end

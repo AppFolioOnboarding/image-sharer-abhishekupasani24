@@ -12,7 +12,7 @@ class ImageTest < ActiveSupport::TestCase
   end
 
   test 'image invalid when incorrect format' do
-    image = Image.new(url: 'http://i.pinimg.com/originals/28/4d/01/284d014be8091c2ac52fa9708163bfd6.jpeg')
+    image = Image.new(url: '~123fdsaasd(')
     refute_predicate image, :valid?
   end
 end
