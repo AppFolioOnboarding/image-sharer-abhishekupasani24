@@ -39,9 +39,10 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     Image.destroy_all
 
     assert_difference 'Image.count', 1 do
-      post images_path, params: { image: { url: 'https://3bfd6.jpg' } }
+      post images_path, params: { image: { url: 'https://3bfd6.jpg', tag_list: 'Beautiful, Green' } }
     end
 
+    assert_equal %w[Beautiful Green], Image.last.tag_list, 'Should have Beautiful and Green'
     assert_redirected_to Image.last
   end
 
