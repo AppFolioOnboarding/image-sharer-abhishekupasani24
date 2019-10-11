@@ -15,6 +15,32 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'img', src: image.url
   end
 
+  test 'index shows filtered images' do
+    Image.destroy_all
+
+    Image.create!(url: 'https://i.pinimg.com/originals/28/4d/01/284d0.jpg', tag_list: %w[Bottle Green])
+    Image.create!(url: 'https://i.pinimg.com/originals/28/4d/01/284d014be809.png')
+
+    get tag_path(tag: 'Bottle')
+
+    assert_response :success
+    assert_select 'h1', 'My Images'
+    assert_select 'a', 'Bottle'
+  end
+
+  test 'index shows no images for non existing tags' do
+    Image.destroy_all
+
+    Image.create!(url: 'https://i.pinimg.com/originals/28/4d/01/284d0.jpg', tag_list: %w[Bottle Green])
+    Image.create!(url: 'https://i.pinimg.com/originals/28/4d/01/284d014be809.png')
+
+    get tag_path(tag: 'Blue')
+
+    assert_response :success
+    assert_select 'h1', 'My Images'
+    assert_select 'img', count: 0
+  end
+
   test 'show' do
     Image.destroy_all
 
