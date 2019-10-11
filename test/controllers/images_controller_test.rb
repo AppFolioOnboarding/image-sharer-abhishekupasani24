@@ -80,4 +80,20 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select 'h1', 'New Image'
   end
+
+  test 'destroy removes the image' do
+    @image = Image.create!(url: 'https://i.pinimg.com/originals/28/4d/01/284d014be809.png')
+
+    assert_difference 'Image.count', -1 do
+      delete image_path(id: @image.id)
+    end
+  end
+
+  test 'destroy does not remove image for invalid id' do
+    @image = Image.create!(url: 'https://i.pinimg.com/originals/28/4d/01/284d014be809.png')
+
+    assert_difference 'Image.count', 0 do
+      delete image_path(id: -1)
+    end
+  end
 end
